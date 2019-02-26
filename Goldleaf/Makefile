@@ -140,8 +140,8 @@ nsp:
 	@mkdir -p $(CURDIR)/Program/_content
 	@rm -rf $(CURDIR)/Program/_temp
 	@mkdir -p $(CURDIR)/Program/_temp
-	@rm -rf $(CURDIR)/Output/_meta
-	@mkdir -p $(CURDIR)/Output/_meta
+	@rm -rf $(CURDIR)/Meta/_meta
+	@mkdir -p $(CURDIR)/Meta/_meta
 	@mv $(CURDIR)/Output/Goldleaf.nso $(CURDIR)/Program/_temp/main
 	@cp $(CURDIR)/Program/ExeFs/main.npdm/default.npdm $(CURDIR)/Program/_temp/main.npdm
 	@echo Goldleaf[nsp]: Generating program NCA...
@@ -157,14 +157,14 @@ nsp:
 	@$(CURDIR)/BuildTools/hacpack -k $(CURDIR)/BuildTools/prod.keys --type nca --ncatype manual --titleid $(APP_TITLEID) --romfsdir=$(CURDIR)/LegalInfo/RomFs --outdir=$(CURDIR)/LegalInfo/_content
 	$(eval CLEGALINFO = $(shell ls -t $(CURDIR)/LegalInfo/_content | head -n 1))
 	@echo Goldleaf[nsp]: Generating meta CNMT NCA...
-	@$(CURDIR)/BuildTools/hacpack -k $(CURDIR)/BuildTools/prod.keys --type nca --ncatype meta --titleid $(APP_TITLEID) --titletype application --programnca $(CURDIR)/Program/_content/$(CPROGRAM) --controlnca $(CURDIR)/Control/_content/$(CCONTROL) --htmldocnca $(CURDIR)/HtmlDocument/_content/$(CHTMLDOC) --legalnca $(CURDIR)/LegalInfo/_content/$(CLEGALINFO) --outdir=$(CURDIR)/Output/_meta
-	$(eval CMETA = $(shell ls -t $(CURDIR)/Output/_meta | head -n 1))
-	@cp $(CURDIR)/Program/_content/$(CPROGRAM) $(CURDIR)/Output/_meta/$(CPROGRAM)
-	@cp $(CURDIR)/Control/_content/$(CCONTROL) $(CURDIR)/Output/_meta/$(CCONTROL)
-	@cp $(CURDIR)/HtmlDocument/_content/$(CHTMLDOC) $(CURDIR)/Output/_meta/$(CHTMLDOC)
-	@cp $(CURDIR)/LegalInfo/_content/$(CLEGALINFO) $(CURDIR)/Output/_meta/$(CLEGALINFO)
+	@$(CURDIR)/BuildTools/hacpack -k $(CURDIR)/BuildTools/prod.keys --type nca --ncatype meta --titleid $(APP_TITLEID) --titletype application --programnca $(CURDIR)/Program/_content/$(CPROGRAM) --controlnca $(CURDIR)/Control/_content/$(CCONTROL) --htmldocnca $(CURDIR)/HtmlDocument/_content/$(CHTMLDOC) --legalnca $(CURDIR)/LegalInfo/_content/$(CLEGALINFO) --outdir=$(CURDIR)/Meta/_meta
+	$(eval CMETA = $(shell ls -t $(CURDIR)/Meta/_meta | head -n 1))
+	@cp $(CURDIR)/Program/_content/$(CPROGRAM) $(CURDIR)/Meta/_meta/$(CPROGRAM)
+	@cp $(CURDIR)/Control/_content/$(CCONTROL) $(CURDIR)/Meta/_meta/$(CCONTROL)
+	@cp $(CURDIR)/HtmlDocument/_content/$(CHTMLDOC) $(CURDIR)/Meta/_meta/$(CHTMLDOC)
+	@cp $(CURDIR)/LegalInfo/_content/$(CLEGALINFO) $(CURDIR)/Meta/_meta/$(CLEGALINFO)
 	@echo Goldleaf[nsp]: Contents copied. Generating final NSP...
-	@$(CURDIR)/BuildTools/hacpack -k $(CURDIR)/BuildTools/prod.keys --type nsp --titleid $(APP_TITLEID) --ncadir $(CURDIR)/Output/_meta --outdir=$(CURDIR)/Output
+	@$(CURDIR)/BuildTools/hacpack -k $(CURDIR)/BuildTools/prod.keys --type nsp --titleid $(APP_TITLEID) --ncadir $(CURDIR)/Meta/_meta --outdir=$(CURDIR)/Output
 	@mv $(CURDIR)/Output/050032a5cf12e000.nsp $(CURDIR)/Output/Goldleaf.nsp
 	@rm -rf $(CURDIR)/hacpack_backup
 	@echo Goldleaf[nsp]: Build finished!
